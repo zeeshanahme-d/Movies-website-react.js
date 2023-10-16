@@ -1,0 +1,54 @@
+@import "../../../mixins.scss";
+.switchingTabs {
+    height: 28px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 2px;
+    @include md{
+        height: 40px;
+    }
+    .tabItems {
+        display: flex;
+        align-items: center;
+        height: 25px;
+        position: relative;
+        @include md{
+            height: 35px;
+        }
+        .tabItem {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            color: var(--black);
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color ease 0.3s;
+            letter-spacing: .5px;
+            @include md{
+                width: 100px;
+                font-size: 16px;
+            }
+            &.active {
+                color: white;
+            }
+        }
+        .movingBg {
+            height: 25px;
+            width: 90px;
+            border-radius: 15px;
+            background-image: var(--gradient);
+            position: absolute;
+            left: 0;
+            transition: left cubic-bezier(0.88, -0.35, 0.565, 1.35) 0.4s;
+            @include md{
+                width: 100px;
+                height: 30px;
+            }
+        }
+    }
+}
