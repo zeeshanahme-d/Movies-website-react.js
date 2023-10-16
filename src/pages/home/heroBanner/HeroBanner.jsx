@@ -15,7 +15,7 @@ function HeroBanner() {
     console.log("🚀 ~ file: HeroBanner.jsx:15 ~ HeroBanner ~ data:", data)
 
     useEffect(() => {
-        const bg = data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
+        const bg = url.backDrop + data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
         setBackground(bg)
     }, [data]);
 
