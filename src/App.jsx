@@ -10,7 +10,6 @@ import Home from './pages/home/Home'
 import SearchResult from './pages/searchResult/SearchResult'
 import Details from './pages/details/Details'
 import Explore from './pages/explore/Explore'
-import Page404 from './pages/404/Page404'
 
 
 function App() {
@@ -62,7 +61,6 @@ function App() {
           <Route path='/:mediaType/:id' element={<Details />} />
           <Route path='/search/:query' element={<SearchResult />} />
           <Route path='/explore/:mediaType' element={<Explore />} />
-          <Route path='*' element={<Page404 />} />
         </Routes>
         <Footer />
       </BrowserRouter>
