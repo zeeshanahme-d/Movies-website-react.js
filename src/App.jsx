@@ -10,7 +10,7 @@ import Home from './pages/home/Home'
 import SearchResult from './pages/searchResult/SearchResult'
 import Details from './pages/details/Details'
 import Explore from './pages/explore/Explore'
-import Page404 from './pages/404/page404'
+import Page404 from './pages/404/Page404'
 
 
 function App() {
