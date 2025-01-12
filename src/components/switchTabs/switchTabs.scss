@@ -27,7 +27,7 @@
             z-index: 1;
             font-weight: bold;
             cursor: pointer;
-            transition: color ease 0.3s;
+            transition: color ease-in-out 0.3s;
             letter-spacing: .5px;
             @include md{
                 width: 100px;
