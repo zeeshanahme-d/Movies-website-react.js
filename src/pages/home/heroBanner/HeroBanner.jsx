@@ -20,8 +20,8 @@ function HeroBanner() {
     }, [data, url]);
 
     const searchQueryHandler = (event) => {
-        if (event.key === 'Enter') {
-            navigate(`/search/:${query}`)
+        if (query.trim() != "") {
+            navigate(`/search/:${query.trim()}`)
         }
     }
 
@@ -40,10 +40,16 @@ function HeroBanner() {
                         <input
                             type="text"
                             placeholder='Search for movies and TV show....'
-                            onKeyUp={searchQueryHandler}
                             onChange={(e) => { setQuery(e.target.value) }}
+                            onKeyUp={(event) => {
+                                if (event.key === 'Enter') {
+                                    if (query.trim() != "") {
+                                        navigate(`/search/:${query.trim()}`)
+                                    }
+                                };
+                            }}
                         />
-                        <button onClick={() => navigate(`/search/:${query}`)}>Search</button>
+                        <button onClick={searchQueryHandler}>Search</button>
                     </div>
                 </div>
 
