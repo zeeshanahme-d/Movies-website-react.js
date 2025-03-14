@@ -38,13 +38,6 @@ const Header = () => {
     return () => { window.removeEventListener("scroll", scrollNavbar); }
   }, [lastScrollY]);
 
-  const searchQueryHandler = (event) => {
-    if (event.key === 'Enter') {
-      navigate(`/search/:${query}`)
-      setShowSearch(false)
-    }
-  };
-
   const openSearchMenu = () => {
     setMobileMenu(false)
     setShowSearch(true);
@@ -67,7 +60,7 @@ const Header = () => {
   return (
     <header className={`header ${show} ${mobileMenu ? "mobileView" : ""}`}>
       <ContentWrapper>
-        <div className="logo" onClick={()=>{navigate("./")}}>
+        <div className="logo" onClick={() => { navigate("./") }}>
           <img src={logo} alt="" />
         </div>
         <ul className="menuItems">
@@ -80,19 +73,26 @@ const Header = () => {
           {mobileMenu ? < VscChromeClose onClick={() => setMobileMenu(false)} /> : <SlMenu onClick={openMobileMenu} />}
         </div>
       </ContentWrapper>
-      {showSearch && <div className="searchBar">
-        <ContentWrapper>
-          <div className="searchInput">
-            <input
-              type="text"
-              placeholder='Search for movies and TV show....'
-              onKeyUp={searchQueryHandler}
-              onChange={(e) => { setQuery(e.target.value) }}
-            />
-            < VscChromeClose onClick={() => setShowSearch(false)} />
-          </div>
-        </ContentWrapper>
-      </div>}
+      {showSearch &&
+        <div className="searchBar">
+          <ContentWrapper>
+            <div className="searchInput">
+              <input
+                type="text"
+                placeholder='Search for movies and TV show....'
+                onChange={(e) => { setQuery(e.target.value) }}
+                onKeyUp={(event) => {
+                  if (event.key === 'Enter') {
+                    if (query.trim() != "") {
+                      navigate(`/search/:${query.trim()}`)
+                    }
+                  };
+                }}
+              />
+              < VscChromeClose onClick={() => setShowSearch(false)} />
+            </div>
+          </ContentWrapper>
+        </div>}
     </header>
 
   );
