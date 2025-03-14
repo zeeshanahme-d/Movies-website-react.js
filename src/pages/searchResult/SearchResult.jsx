@@ -70,9 +70,10 @@ export default function SearchResult() {
             </>
           ) :
             (
-              <>  <span className='resultNotFound'>Sorry , Results Not Found!</span>
-                <Img src={noResult}/>
-                </>
+              <div className='noResult'>
+                <Img src={noResult} className={"noResultImage"} />
+                <span className='resultNotFound'>Sorry , Results Not Found!</span>
+              </div>
             )
           }
         </ContentWrapper>
