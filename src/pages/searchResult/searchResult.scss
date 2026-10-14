@@ -1,4 +1,4 @@
-@import "../../../mixins.scss";
+@use "../../../mixins.scss" as *;
 
 .searchResultsPage {
     min-height: 700px;
@@ -30,20 +30,8 @@
         }
     }
 
-    .content {
-        display: flex;
-        flex-flow: row wrap;
-        gap: 10px;
-        margin-bottom: 50px;
-
-        @include md {
-            gap: 20px;
-        }
-
-        .movieCard {
-            .posterBlock {
-                margin-bottom: 20px;
-            }
-        }
+    // No rating badge overlaps the poster in search, so less room is needed.
+    .movieCard .posterBlock {
+        margin-bottom: 20px;
     }
 }
