@@ -1,4 +1,4 @@
-@import "../../../../mixins.scss";
+@use "../../../../mixins.scss" as *;
 
 .castSection {
     position: relative;
@@ -12,6 +12,7 @@
         display: flex;
         gap: 20px;
         overflow-y: hidden;
+        @include hide-scrollbar;
         margin-right: -20px;
         margin-left: -20px;
         padding: 0 20px;
@@ -66,6 +67,7 @@
         display: flex;
         gap: 20px;
         overflow-y: hidden;
+        @include hide-scrollbar;
         margin-right: -20px;
         margin-left: -20px;
         padding: 0 20px;
