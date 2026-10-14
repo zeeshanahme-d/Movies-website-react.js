@@ -1,10 +1,11 @@
-@import "../../../mixins.scss";
+@use "../../../mixins.scss" as *;
 
 .carouselSection {
     position: relative;
     margin-bottom: 70px;
 
-    .contentWrapper {
+    // Only the title/tabs row; the carousel's own wrapper must stay block-level.
+    > .contentWrapper {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;

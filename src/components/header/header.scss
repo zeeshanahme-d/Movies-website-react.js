@@ -1,4 +1,4 @@
-@import "../../../mixins.scss";
+@use "../../../mixins.scss" as *;
 
 .header {
     position: fixed;
@@ -23,6 +23,10 @@
 
     &.hide {
         transform: translateY(-60px);
+    }
+
+    button {
+        display: flex;
     }
 
     .contentWrapper {
@@ -115,7 +119,7 @@
                 flex-direction: column;
                 align-items: flex-start;
 
-                &:last-child {
+                &.searchIcon {
                     display: none;
                 }
             }

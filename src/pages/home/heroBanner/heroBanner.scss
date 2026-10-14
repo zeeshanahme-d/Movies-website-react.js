@@ -1,4 +1,4 @@
-@import "../../../../mixins.scss";
+@use "../../../../mixins.scss" as *;
 
 .heroBanner {
     width: 100%;
@@ -67,7 +67,7 @@
 
         .subTitle {
             font-size: 18px;
-            font-weight: 500px;
+            font-weight: 500;
             margin-bottom: 40px;
 
             @include md {
