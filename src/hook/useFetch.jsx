@@ -1,26 +1,26 @@
-/* eslint-disable no-unused-vars */
-
 import { useEffect, useState } from "react";
-import { FetchDataFromAPI } from "../utils/api";
+import { fetchDataFromApi } from "../utils/api";
+
 const useFetch = (url) => {
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setLoading("loading...");
+        // Drop responses for a url we've already moved away from.
+        let ignore = false;
+        setLoading(true);
         setData(null);
         setError(null);
 
-        FetchDataFromAPI(url)
-            .then((res) => {
-                setLoading(false);
-                setData(res);
-            })
-            .catch((err) => {
-                setLoading(false);
-                setError("Something went wrong!");
-            });
+        fetchDataFromApi(url)
+            .then((res) => !ignore && setData(res))
+            .catch(() => !ignore && setError("Something went wrong!"))
+            .finally(() => !ignore && setLoading(false));
+
+        return () => {
+            ignore = true;
+        };
     }, [url]);
 
     return { data, loading, error };
