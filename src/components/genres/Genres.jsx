@@ -1,4 +1,3 @@
-import React from 'react'
 import './genres.scss'
 import { useSelector } from 'react-redux';
 

@@ -1,4 +1,4 @@
-@import "../../../mixins.scss";
+@use "../../../mixins.scss" as *;
 
 .carousel {
     margin-bottom: 50px;
@@ -48,6 +48,7 @@
         display: flex;
         gap: 10px;
         overflow-y: hidden;
+        @include hide-scrollbar;
         margin-right: -20px;
         margin-left: -20px;
         padding: 0 20px;
@@ -101,6 +102,7 @@
         display: flex;
         gap: 10px;
         overflow-y: hidden;
+        @include hide-scrollbar;
         margin-right: -20px;
         margin-left: -20px;
         padding: 0 20px;

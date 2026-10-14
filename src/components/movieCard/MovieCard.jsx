@@ -1,47 +1,33 @@
-import React from "react";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./movieCard.scss";
 import Img from "../../components/lazyLoadImg/Img";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import PosterFallback from "../../assets/images/no-poster.png";
+import { imageUrl } from "../../utils/api";
 
 const MovieCard = ({ data, fromSearch, mediaType }) => {
-
-    const { url } = useSelector((state) => state.home);
-    const navigate = useNavigate();
-
-    const posterUrl = data.poster_path
-        ? url.poster + data.poster_path
-        : PosterFallback;
-
+    const title = data.title || data.name;
+    const date = data.release_date || data.first_air_date;
 
     return (
-        <div
-            className="movieCard"
-            onClick={() =>
-                navigate(`/${data.media_type || mediaType}/${data.id}`)
-            }
-        >
+        <Link className="movieCard" to={`/${data.media_type || mediaType}/${data.id}`}>
             <div className="posterBlock">
-                <Img className="posterImg" src={posterUrl} />
+                <Img className="posterImg" src={imageUrl(data.poster_path, "w500") || PosterFallback} alt={title} />
                 {!fromSearch && (
-                    <React.Fragment>
-                        <CircleRating rating={data.vote_average.toFixed(1)} />
-                        <Genres data={data.genre_ids.slice(0, 2)} />
-                    </React.Fragment>
+                    <>
+                        <CircleRating rating={data.vote_average} />
+                        <Genres idsData={data.genre_ids?.slice(0, 2)} />
+                    </>
                 )}
             </div>
             <div className="textBlock">
-                <span className="title">{data.title || data.name}</span>
-                <span className="date">
-                    {dayjs(data.release_date).format("MMM D, YYYY")}
-                </span>
+                <span className="title">{title}</span>
+                <span className="date">{date && dayjs(date).format("MMM D, YYYY")}</span>
             </div>
-        </div>
+        </Link>
     );
 };
 

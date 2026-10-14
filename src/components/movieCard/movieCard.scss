@@ -1,15 +1,7 @@
-@import "../../../mixins.scss";
+@use "../../../mixins.scss" as *;
 .movieCard {
-    width: calc(50% - 5px);
+    display: block;
     margin-bottom: 25px;
-    cursor: pointer;
-    flex-shrink: 0;
-    @include md {
-        width: calc(25% - 15px);
-    }
-    @include lg {
-        width: calc(20% - 16px);
-    }
     .posterBlock {
         position: relative;
         width: 100%;

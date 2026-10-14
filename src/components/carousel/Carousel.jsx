@@ -1,11 +1,9 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import {
     BsFillArrowLeftCircleFill,
     BsFillArrowRightCircleFill,
 } from "react-icons/bs";
-
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
 import ContentWrapper from "../contentWrapper/ContentWrapper";
@@ -14,69 +12,70 @@ import PosterFallback from "../../assets/images/no-poster.png";
 import './carousel.scss'
 import Genres from "../genres/Genres"
 import CircleRating from '../circleRating/CircleRating'
+import { imageUrl } from "../../utils/api";
 
+const SkeletonItem = () => (
+    <div className="skeletonItem">
+        <div className="posterBlock skeleton"></div>
+        <div className="textBlock">
+            <div className="title skeleton"></div>
+            <div className="date skeleton"></div>
+        </div>
+    </div>
+);
 
-function Carousel({ data, loading ,endPoint , title}) {
-
+function Carousel({ data, loading, endPoint, title }) {
     const carouselContainer = useRef();
-    const url = useSelector(state => state.home.url)
-    const navigate = useNavigate();
+    // Trending "all" can include people, which aren't titles.
+    const items = data?.filter((item) => item.media_type !== "person") ?? [];
+
+    if (!loading && !items.length) return null;
 
     const navigation = (direction) => {
         const container = carouselContainer.current;
-        const scrollAmount = direction === "left" ? container.scrollLeft - (container.offsetWidth + 20) : container.scrollLeft + (container.offsetWidth + 20)
+        const step = container.offsetWidth + 20;
 
         container.scrollTo({
-            left: scrollAmount,
+            left: container.scrollLeft + (direction === "left" ? -step : step),
             behavior: "smooth"
         })
-    };
-
-    const skItem = () => {
-        return (
-            <div className="skeletonItem ">
-                <div className="posterBlock skeleton"></div>
-                <div className="textBlock">
-                    <div className="title skeleton"></div>
-                    <div className="date skeleton"></div>
-                </div>
-            </div>
-        )
     };
 
     return (
         <div className="carousel">
             <ContentWrapper>
-                <div className="carouselTitle">{title}</div>
-                <BsFillArrowLeftCircleFill className="carouselLeftNav arrow" onClick={() => navigation("left")} />
-                <BsFillArrowRightCircleFill className="carouselRightNav arrow" onClick={() => navigation("right")} />
+                {title && <div className="carouselTitle">{title}</div>}
                 {!loading ? (
-                    <div className="carouselItems" ref={carouselContainer}>
-                        {data?.map((item) => {
-                            const posterPath = item.poster_path ? url.poster + item.poster_path : PosterFallback;
-                            return (
-                                <div className="carouselItem" onClick={() => { navigate(`/${item.media_type || endPoint}/${item.id}`) }} key={item.id}>
-                                    <div className="posterBlock">
-                                        <Img src={posterPath}/>
-                                        <CircleRating rating={item.vote_average.toFixed(1)} />
-                                        <Genres idsData={item.genre_ids.slice(0, 2)} />
-                                    </div>
-                                    <div className="textBlock">
-                                        <span className="title">{item.title || item.name}</span>
-                                        <span className="date">{dayjs(item.release_date || item.first_air_date).format("D MMM , YYYY")}</span>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <>
+                        <button className="carouselLeftNav arrow" aria-label="Scroll left" onClick={() => navigation("left")}>
+                            <BsFillArrowLeftCircleFill />
+                        </button>
+                        <button className="carouselRightNav arrow" aria-label="Scroll right" onClick={() => navigation("right")}>
+                            <BsFillArrowRightCircleFill />
+                        </button>
+                        <div className="carouselItems" ref={carouselContainer}>
+                            {items.map((item) => {
+                                const itemTitle = item.title || item.name;
+                                const date = item.release_date || item.first_air_date;
+                                return (
+                                    <Link className="carouselItem" to={`/${item.media_type || endPoint}/${item.id}`} key={item.id}>
+                                        <div className="posterBlock">
+                                            <Img src={imageUrl(item.poster_path, "w500") || PosterFallback} alt={itemTitle} />
+                                            <CircleRating rating={item.vote_average} />
+                                            <Genres idsData={item.genre_ids?.slice(0, 2)} />
+                                        </div>
+                                        <div className="textBlock">
+                                            <span className="title">{itemTitle}</span>
+                                            <span className="date">{date && dayjs(date).format("D MMM, YYYY")}</span>
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </>
                 ) : (
                     <div className="loadingSkeleton">
-                        {skItem()}
-                        {skItem()}
-                        {skItem()}
-                        {skItem()}
-                        {skItem()}
-                        {skItem()}
+                        {Array.from({ length: 6 }, (_, i) => <SkeletonItem key={i} />)}
                     </div>
                 )}
             </ContentWrapper>
