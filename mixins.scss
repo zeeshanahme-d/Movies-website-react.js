@@ -35,3 +35,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@mixin hide-scrollbar {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
