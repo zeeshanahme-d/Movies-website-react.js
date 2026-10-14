@@ -5,7 +5,7 @@ Movix is a **React-based** movie discovery web app that allows users to explore 
 ## 🚀 Features  
 - 🔍 **Search & Discover**: Find movies and TV shows instantly.  
 - 📊 **Trending & Top-Rated Lists**: Browse categorized content.  
-- 🔄 **Infinite Scrolling**: Smooth browsing experience.  
+- 🔄 **Infinite Scrolling**: Virtualized grids stay fast however far you scroll.  
 - 🖼️ **Lazy Loading Images**: Optimized performance.  
 - 🎯 **Movie Ratings & Genres**: Get detailed insights.  
 - 🌙 **Dark Theme**: Sleek and modern UI.  
